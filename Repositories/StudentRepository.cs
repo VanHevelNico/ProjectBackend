@@ -8,7 +8,6 @@ public interface IStudentRepository {
 
 public class StudentRepository : IStudentRepository {
     private IBackendProjectContext _context;
-
     public StudentRepository(IBackendProjectContext context) {
         _context = context;
     }

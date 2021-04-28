@@ -28,6 +28,8 @@ namespace Project
         {
             services.Configure<ConnectionStrings>(Configuration.GetSection("ConnectionStrings"));
             services.AddDbContext<BackendProjectContext>();
+            services.AddControllers();
+            services.AddTransient<IBackendProjectContext,BackendProjectContext>();
             services.AddTransient<ICafeRepository,CafeRepository>();
             services.AddTransient<IEvenementRepository,EvenementRepository>();            
             services.AddTransient<IStadRepository,StadRepository>();

@@ -23,7 +23,7 @@ public class CafeRepository : ICafeRepository {
     public async Task<Cafe> AddCafe(Cafe cafe)
     {
         await _context.Cafes.AddAsync(cafe);
-        await _context.SaveChangeAsync();
+        await _context.SaveChangesAsync();
         return cafe;
     }
     public async Task<Cafe> GetCafeById(Guid CafeId) {

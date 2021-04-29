@@ -12,8 +12,7 @@ public interface IBackendProjectContext
     DbSet<Studentenclub> Studentenclubs { get; set; }
     DbSet<Student> Studente { get; set; }
     DbSet<Evenementen> Evenementen { get; set; }
-    int SaveChanges();
-    Task<int> SaveChangeAsync(CancellationToken cancellationToken = default);
+    Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
 public class BackendProjectContext : DbContext, IBackendProjectContext
@@ -96,8 +95,4 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
         */
     }
 
-    public Task<int> SaveChangeAsync(CancellationToken cancellationToken = default)
-    {
-        throw new NotImplementedException();
-    }
 }

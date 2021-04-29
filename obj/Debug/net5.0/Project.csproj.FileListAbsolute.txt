@@ -85,7 +85,6 @@ C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Micros
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Microsoft.OpenApi.dll
-C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Newtonsoft.Json.dll
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -122,3 +121,7 @@ C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\obj\Debug\net5.0\Projec
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\obj\Debug\net5.0\ref\Project.dll
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\obj\Debug\net5.0\Project.pdb
 C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\obj\Debug\net5.0\Project.genruntimeconfig.cache
+C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\AutoMapper.dll
+C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Users\nicov\Documents\ABackend\Project\ProjectBackend\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.Versioning.dll

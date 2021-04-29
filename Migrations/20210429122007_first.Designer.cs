@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Project.Migrations
 {
     [DbContext(typeof(BackendProjectContext))]
-    [Migration("20210427183517_first migration")]
-    partial class firstmigration
+    [Migration("20210429122007_first")]
+    partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -40,29 +40,6 @@ namespace Project.Migrations
                     b.HasIndex("StadId");
 
                     b.ToTable("Cafes");
-
-                    b.HasData(
-                        new
-                        {
-                            CafeId = new Guid("5caafc20-dd10-44f7-8373-3bfbfe923709"),
-                            Adres = "GraafKarelDeGoedelaan 5, 8500 Kortrijk",
-                            Naam = "Tbunkertje",
-                            StadId = 1
-                        },
-                        new
-                        {
-                            CafeId = new Guid("1c61c178-c33f-470e-8d8a-d287b49ad8d9"),
-                            Adres = "Doorniksesteenweg 2, 8500 Kortrijk",
-                            Naam = "Tkanon",
-                            StadId = 1
-                        },
-                        new
-                        {
-                            CafeId = new Guid("c91d83ca-4c49-4b37-82a6-bd71cc4566e7"),
-                            Adres = "Eiermarkt 2, 8000 Brugge",
-                            Naam = "De Pick",
-                            StadId = 2
-                        });
                 });
 
             modelBuilder.Entity("Evenementen", b =>
@@ -74,6 +51,9 @@ namespace Project.Migrations
                     b.Property<string>("Beschrijving")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("LinkEvent")
                         .HasColumnType("nvarchar(max)");
 
@@ -83,14 +63,6 @@ namespace Project.Migrations
                     b.HasKey("EvenementenId");
 
                     b.ToTable("Evenementen");
-
-                    b.HasData(
-                        new
-                        {
-                            EvenementenId = new Guid("8aec76b1-8519-4138-a4d3-f1e6708ce71a"),
-                            Beschrijving = "Commilitones! Zet jullie bierpotten klaar voor deze cantus! 20u30 Io Vivat",
-                            Naam = "Zomercantus"
-                        });
                 });
 
             modelBuilder.Entity("EvenementenStudentenclub", b =>
@@ -130,12 +102,6 @@ namespace Project.Migrations
                         {
                             StadId = 1,
                             Naam = "Kortrijk",
-                            Provincie = "West-Vlaanderen"
-                        },
-                        new
-                        {
-                            StadId = 2,
-                            Naam = "Brugge",
                             Provincie = "West-Vlaanderen"
                         });
                 });
@@ -203,17 +169,6 @@ namespace Project.Migrations
                     b.HasIndex("StadId");
 
                     b.ToTable("Studentenclubs");
-
-                    b.HasData(
-                        new
-                        {
-                            StudentenclubId = new Guid("f279460b-36a7-4cf4-a998-4b3ccb2dd3a1"),
-                            Beschrijving = "De club van Howest en Ugent -> De beste club van Kortrijk!",
-                            CafeId = 0,
-                            Naam = "HsC Centaura",
-                            Oprichtingsjaar = 1977,
-                            StadId = 2
-                        });
                 });
 
             modelBuilder.Entity("Cafe", b =>

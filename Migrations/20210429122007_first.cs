@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Migrations
 {
-    public partial class firstmigration : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,8 @@ namespace Project.Migrations
                     EvenementenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Naam = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Beschrijving = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    LinkEvent = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    LinkEvent = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,34 +147,9 @@ namespace Project.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "Evenementen",
-                columns: new[] { "EvenementenId", "Beschrijving", "LinkEvent", "Naam" },
-                values: new object[] { new Guid("8aec76b1-8519-4138-a4d3-f1e6708ce71a"), "Commilitones! Zet jullie bierpotten klaar voor deze cantus! 20u30 Io Vivat", null, "Zomercantus" });
-
-            migrationBuilder.InsertData(
                 table: "Steden",
                 columns: new[] { "StadId", "Naam", "Provincie" },
                 values: new object[] { 1, "Kortrijk", "West-Vlaanderen" });
-
-            migrationBuilder.InsertData(
-                table: "Steden",
-                columns: new[] { "StadId", "Naam", "Provincie" },
-                values: new object[] { 2, "Brugge", "West-Vlaanderen" });
-
-            migrationBuilder.InsertData(
-                table: "Cafes",
-                columns: new[] { "CafeId", "Adres", "Naam", "StadId" },
-                values: new object[,]
-                {
-                    { new Guid("5caafc20-dd10-44f7-8373-3bfbfe923709"), "GraafKarelDeGoedelaan 5, 8500 Kortrijk", "Tbunkertje", 1 },
-                    { new Guid("1c61c178-c33f-470e-8d8a-d287b49ad8d9"), "Doorniksesteenweg 2, 8500 Kortrijk", "Tkanon", 1 },
-                    { new Guid("c91d83ca-4c49-4b37-82a6-bd71cc4566e7"), "Eiermarkt 2, 8000 Brugge", "De Pick", 2 }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Studentenclubs",
-                columns: new[] { "StudentenclubId", "Beschrijving", "CafeId", "CafeId1", "Naam", "Oprichtingsjaar", "StadId" },
-                values: new object[] { new Guid("f279460b-36a7-4cf4-a998-4b3ccb2dd3a1"), "De club van Howest en Ugent -> De beste club van Kortrijk!", 0, null, "HsC Centaura", 1977, 2 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cafes_StadId",

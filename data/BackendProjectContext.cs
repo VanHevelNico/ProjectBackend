@@ -40,13 +40,13 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        
         modelBuilder.Entity<Stad>().HasData(new Stad()
         {
             StadId = 1,
             Naam = "Kortrijk",
             Provincie = "West-Vlaanderen"
-        });
-
+        });/*
         modelBuilder.Entity<Stad>().HasData(new Stad()
         {
             StadId = 2,
@@ -93,7 +93,7 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
             Naam = "Zomercantus",
             Beschrijving = "Commilitones! Zet jullie bierpotten klaar voor deze cantus! 20u30 Io Vivat"
         });
-
+        */
     }
 
     public Task<int> SaveChangeAsync(CancellationToken cancellationToken = default)

@@ -7,5 +7,5 @@ public class Evenementen {
     public string Beschrijving {get;set;}
     public string LinkEvent {get;set;}
     public DateTime Date {get;set;}
-    public List<Studentenclub> Organisators {get;} = new List<Studentenclub>();
+    public List<Studentenclub> Organisators {get;set;}
 }

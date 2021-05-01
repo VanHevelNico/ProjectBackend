@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Project.Migrations
 {
     [DbContext(typeof(BackendProjectContext))]
-    [Migration("20210429122007_first")]
-    partial class first
+    [Migration("20210501190052_aaa")]
+    partial class aaa
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -103,6 +103,12 @@ namespace Project.Migrations
                             StadId = 1,
                             Naam = "Kortrijk",
                             Provincie = "West-Vlaanderen"
+                        },
+                        new
+                        {
+                            StadId = 2,
+                            Naam = "Brugge",
+                            Provincie = "West-Vlaanderen"
                         });
                 });
 
@@ -147,10 +153,7 @@ namespace Project.Migrations
                     b.Property<string>("Beschrijving")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CafeId")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("CafeId1")
+                    b.Property<Guid>("CafeId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Naam")
@@ -164,7 +167,7 @@ namespace Project.Migrations
 
                     b.HasKey("StudentenclubId");
 
-                    b.HasIndex("CafeId1");
+                    b.HasIndex("CafeId");
 
                     b.HasIndex("StadId");
 
@@ -216,7 +219,9 @@ namespace Project.Migrations
                 {
                     b.HasOne("Cafe", "Cafe")
                         .WithMany("Studentenclubs")
-                        .HasForeignKey("CafeId1");
+                        .HasForeignKey("CafeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Stad", "Stad")
                         .WithMany()

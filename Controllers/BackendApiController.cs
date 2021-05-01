@@ -52,6 +52,19 @@ namespace Project.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("cafes/city/{stadId}")]
+        public async Task<ActionResult<Cafe>> GetCafeByCityId(int stadId) {
+            try {
+                return new OkObjectResult(await _backendProjectService.GetCafeByCityId(stadId));
+
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex);
+                return new StatusCodeResult(500);
+            }
+        }
+
         [HttpPost]
         [Route("cafes")]
         public async Task<ActionResult<CafeDTO>> AddCafe(CafeDTO cafe)
@@ -67,10 +80,15 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("evenementen")]
-        public async Task<ActionResult<List<Evenementen>>> GetEvenementen() {
+        public async Task<ActionResult<List<Evenementen>>> GetEvenementen(DateTime StartDate , DateTime EndDate) {
             try {
-                return new OkObjectResult(await _backendProjectService.GetEvenementen());
-
+                //Beide query strings moeten ingevuld worden anders alle 
+                if(StartDate != DateTime.MinValue && EndDate != DateTime.MinValue) {
+                    return new OkObjectResult(await _backendProjectService.GetEvenementenByDate(StartDate, EndDate));
+                }
+                else{
+                    return new OkObjectResult(await _backendProjectService.GetEvenementen());
+                }
             }
             catch(Exception ex) {
                 Console.WriteLine(ex);
@@ -78,6 +96,46 @@ namespace Project.Controllers
                 return new OkObjectResult(ex);
 
             }
+        }
+
+        [HttpGet]
+        [Route("evenementen/studentenclub/{studentenclubId}")]
+        public async Task<ActionResult<List<Evenementen>>> GetEventByStudentClub(Guid studentenclubId) {
+            try {
+                    return new OkObjectResult(await _backendProjectService.GetEvenementenByOrganisator(studentenclubId));
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex);
+                // return new StatusCodeResult(500);
+                return new OkObjectResult(ex);
+
+            }
+        }
+        
+        [HttpPost]
+        [Route("evenementen")]
+        public async Task<ActionResult<EvenementenDTO>> AddEvent(EvenementenDTO waarde) {
+            try{
+                return new OkObjectResult(await _backendProjectService.AddEvent(waarde));
+            }
+            catch(Exception ex){
+                Console.WriteLine(ex);
+                return new StatusCodeResult(500);
+            }
+
+        }
+        
+        [HttpPost]
+        [Route("studentenclubs")]
+        public async Task<ActionResult<StudentenclubDTO>> AddStudentenclub(StudentenclubDTO waarde) {
+            try{
+                return new OkObjectResult(await _backendProjectService.AddStudentenclub(waarde));
+            }
+            catch(Exception ex){
+                Console.WriteLine(ex);
+                return new StatusCodeResult(500);
+            }
+
         }
     }
 }

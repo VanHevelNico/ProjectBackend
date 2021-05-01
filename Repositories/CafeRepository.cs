@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 public interface ICafeRepository {
     Task<List<Cafe>> GetCafes();
     Task<Cafe> GetCafeById(Guid cafeId);
+    Task<List<Cafe>> GetCafeByCity(int stadId);
     Task<Cafe> AddCafe(Cafe cafe);
 
 }
@@ -19,6 +20,9 @@ public class CafeRepository : ICafeRepository {
     }
     public async Task<List<Cafe>> GetCafes() {
         return await _context.Cafes.ToListAsync();
+    }
+    public async Task<List<Cafe>> GetCafeByCity(int stadId) {
+        return await _context.Cafes.Where(s => s.StadId == stadId).ToListAsync();
     }
     public async Task<Cafe> AddCafe(Cafe cafe)
     {

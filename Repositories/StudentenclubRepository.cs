@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IStudentenclubRepository {
     Task<List<Studentenclub>> GetStudentenclubs();
+    Task<Studentenclub> AddStudentenclub(Studentenclub waarde);
 }
 
 public class StudentenclubRepository : IStudentenclubRepository {
@@ -14,5 +15,11 @@ public class StudentenclubRepository : IStudentenclubRepository {
     }
     public async Task<List<Studentenclub>> GetStudentenclubs() {
         return await _context.Studentenclubs.ToListAsync();
+    }
+    public async Task<Studentenclub> AddStudentenclub(Studentenclub value)
+    {
+        await _context.Studentenclubs.AddAsync(value);
+        await _context.SaveChangesAsync();
+        return value;
     }
 }

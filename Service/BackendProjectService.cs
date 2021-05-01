@@ -5,10 +5,14 @@ using AutoMapper;
 
 public interface IBackendProjectService {
     Task<Cafe> GetCafeById(Guid cafeId);
+    Task<List<Cafe>> GetCafeByCityId(int cityId);
     Task<List<Cafe>> GetCafes();
     Task<List<Evenementen>> GetEvenementen();
+    Task<List<Evenementen>> GetEvenementenByDate(DateTime startDate, DateTime endDate);
     Task<CafeDTO> AddCafe(CafeDTO cafe);
-
+    Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId);
+    Task<EvenementenDTO> AddEvent(EvenementenDTO waarde);
+    Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde);
 }
 public class BackendProjectService : IBackendProjectService {
     private readonly ICafeRepository _cafeRepository;
@@ -28,24 +32,52 @@ public class BackendProjectService : IBackendProjectService {
         _studentRepository = studentRepository;
     }
     //cafes
+    public async Task<List<Cafe>> GetCafes() {
+        return await _cafeRepository.GetCafes();
+    }
     public async Task<Cafe> GetCafeById(Guid cafeId)
     {
         return await _cafeRepository.GetCafeById(cafeId);
 
     }
-    public async Task<List<Cafe>> GetCafes() {
-        return await _cafeRepository.GetCafes();
+    public async Task<List<Cafe>> GetCafeByCityId(int cityId) {
+        return await _cafeRepository.GetCafeByCity(cityId);
     }
     public async Task<List<Evenementen>> GetEvenementen() {
         return await _evenementRepository.GetEvenementen();
     }
-
+    public async Task<List<Evenementen>> GetEvenementenByDate(DateTime startDate, DateTime endDate) {
+        return await _evenementRepository.GetEvenementenByData(startDate, endDate);
+    }
+    public async Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId) {
+        return await _evenementRepository.GetEvenementenByOrganisator(studentenclubId);
+    }
     public async Task<CafeDTO> AddCafe(CafeDTO cafe) {
         try {
             Cafe newCafe = _mapper.Map<Cafe>(cafe);
             await _cafeRepository.AddCafe(newCafe);
             return cafe;
-            //Studentenclubs toevoegen            
+        }
+        catch (System.Exception ex) {
+            throw ex;
+        }
+    }    
+    public async Task<EvenementenDTO> AddEvent(EvenementenDTO waarde) {
+        try {
+            Evenementen newEvent = _mapper.Map<Evenementen>(waarde);
+            await _evenementRepository.AddEvent(newEvent);
+            return waarde;
+        }
+        catch (System.Exception ex) {
+            throw ex;
+        }
+    }
+
+        public async Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde) {
+        try {
+            Studentenclub newStudentClub = _mapper.Map<Studentenclub>(waarde);
+            await _studentenclubRepository.AddStudentenclub(newStudentClub);
+            return waarde;
         }
         catch (System.Exception ex) {
             throw ex;

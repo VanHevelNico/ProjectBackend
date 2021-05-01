@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Migrations
 {
-    public partial class first : Migration
+    public partial class _123 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -78,24 +78,23 @@ namespace Project.Migrations
                     Beschrijving = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Oprichtingsjaar = table.Column<int>(type: "int", nullable: false),
                     StadId = table.Column<int>(type: "int", nullable: false),
-                    CafeId = table.Column<int>(type: "int", nullable: false),
-                    CafeId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CafeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Studentenclubs", x => x.StudentenclubId);
                     table.ForeignKey(
-                        name: "FK_Studentenclubs_Cafes_CafeId1",
-                        column: x => x.CafeId1,
+                        name: "FK_Studentenclubs_Cafes_CafeId",
+                        column: x => x.CafeId,
                         principalTable: "Cafes",
                         principalColumn: "CafeId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Studentenclubs_Steden_StadId",
                         column: x => x.StadId,
                         principalTable: "Steden",
                         principalColumn: "StadId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -146,11 +145,6 @@ namespace Project.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Steden",
-                columns: new[] { "StadId", "Naam", "Provincie" },
-                values: new object[] { 1, "Kortrijk", "West-Vlaanderen" });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Cafes_StadId",
                 table: "Cafes",
@@ -162,9 +156,9 @@ namespace Project.Migrations
                 column: "OrganisatorsStudentenclubId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Studentenclubs_CafeId1",
+                name: "IX_Studentenclubs_CafeId",
                 table: "Studentenclubs",
-                column: "CafeId1");
+                column: "CafeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Studentenclubs_StadId",

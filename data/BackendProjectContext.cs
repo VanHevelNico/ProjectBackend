@@ -35,24 +35,28 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
     {
         options.UseLoggerFactory(LoggerFactory.Create(builder => builder.AddDebug()));
         options.UseSqlServer(_connectionStrings.SQL);
+        
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+            
+       /* modelBuilder.Entity<EvenementenStudentenclub>().HasKey(cs => new {cs.EvenementId, cs.StudentenclubId});
+        modelBuilder.Entity<StudentStudentenclub>().HasKey(cs => new {cs.LedenStudentId, cs.ClubsStudentenclubId});*/
+
         modelBuilder.Entity<Stad>().HasData(new Stad()
         {
             StadId = 1,
             Naam = "Kortrijk",
             Provincie = "West-Vlaanderen"
-        });/*
+        });
         modelBuilder.Entity<Stad>().HasData(new Stad()
         {
             StadId = 2,
             Naam = "Brugge",
             Provincie = "West-Vlaanderen"
         });
-
+/*
         modelBuilder.Entity<Cafe>().HasData(new Cafe()
         {
             CafeId = Guid.NewGuid(),
@@ -76,16 +80,7 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
             Adres = "Eiermarkt 2, 8000 Brugge",
             StadId = 2
         });
-
-        modelBuilder.Entity<Studentenclub>().HasData(new Studentenclub()
-        {
-            StudentenclubId = Guid.NewGuid(),
-            Naam = "HsC Centaura",
-            Beschrijving = "De club van Howest en Ugent -> De beste club van Kortrijk!",
-            Oprichtingsjaar = 1977,
-            StadId = 2
-        });
-
+        
         modelBuilder.Entity<Evenementen>().HasData(new Evenementen()
         {
             EvenementenId = Guid.NewGuid(),

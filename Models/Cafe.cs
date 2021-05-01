@@ -9,5 +9,5 @@ public class Cafe {
     public int StadId {get;set;}
     public Stad Stad {get;set;}
     //Een cafe kan 1 of meerdere studentenclubs hebben als stamcafe
-    public List<Studentenclub> Studentenclubs {get;} = new List<Studentenclub>();
+    public List<Studentenclub> Studentenclubs {get;set;}
 }

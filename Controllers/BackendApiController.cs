@@ -80,10 +80,10 @@ namespace Project.Controllers
 
         [HttpGet]
         [Route("evenementen")]
-        public async Task<ActionResult<List<Evenementen>>> GetEvenementen(DateTime StartDate , DateTime EndDate) {
+        public async Task<ActionResult<List<Evenementen>>> GetEvenementen(string StartDate = null, string EndDate= null) {
             try {
                 //Beide query strings moeten ingevuld worden anders alle 
-                if(StartDate != DateTime.MinValue && EndDate != DateTime.MinValue) {
+                if(StartDate != null && EndDate != null) {
                     return new OkObjectResult(await _backendProjectService.GetEvenementenByDate(StartDate, EndDate));
                 }
                 else{
@@ -98,11 +98,24 @@ namespace Project.Controllers
             }
         }
 
-       /* [HttpGet]
+        [HttpGet]
+        [Route("studentenclubs")]
+        public async Task<ActionResult<Cafe>> GetStudentenClubs() {
+            try {
+                return new OkObjectResult(await _backendProjectService.GetClubs());
+
+            }
+            catch(Exception ex) {
+                Console.WriteLine(ex);
+                return new StatusCodeResult(500);
+            }
+        }
+
+        [HttpGet]
         [Route("evenementen/studentenclub/{studentenclubId}")]
         public async Task<ActionResult<List<Evenementen>>> GetEventByStudentClub(Guid studentenclubId) {
             try {
-                return new OkObjectResult(await _backendProjectService.GetEvenementenByOrganisator(studentenclubId));
+                return new OkObjectResult(await _backendProjectService.GetEventByStudentClub(studentenclubId));
             }
             catch(Exception ex) {
                 Console.WriteLine(ex);
@@ -110,7 +123,7 @@ namespace Project.Controllers
                 return new OkObjectResult(ex);
 
             }
-        }*/
+        }
         
         [HttpPost]
         [Route("evenementen")]
@@ -127,7 +140,7 @@ namespace Project.Controllers
         
         [HttpPost]
         [Route("studentenclubs")]
-        public async Task<ActionResult<StudentenclubDTO>> AddStudentenclub(StudentenclubDTO waarde) {
+        public async Task<ActionResult<Studentenclub>> AddStudentenclub(StudentenclubDTO waarde) {
             try{
                 return new OkObjectResult(await _backendProjectService.AddStudentenclub(waarde));
             }

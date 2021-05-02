@@ -30,7 +30,6 @@ namespace Project
             services.AddTransient<IEvenementRepository,EvenementRepository>();            
             services.AddTransient<IStadRepository,StadRepository>();
             services.AddTransient<IStudentenclubRepository,StudentenclubRepository>();
-            services.AddTransient<IStudentRepository,StudentRepository>();
             services.AddTransient<IBackendProjectService,BackendProjectService>();
             services.AddAuthentication(options =>
             {
@@ -51,12 +50,9 @@ namespace Project
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Project v1"));
-            }
 
             app.UseHttpsRedirection();
             app.UseRouting();

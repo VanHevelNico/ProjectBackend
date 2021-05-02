@@ -12,6 +12,5 @@ public class StudentenclubDTO
     public Guid CafeId {get;set;}
     //public Cafe Cafe {get;set;}
     
-    //public List<Student> Leden {get;} = new List<Student>();
     //public List<Evenementen> Evenementen {get;} = new List<Evenementen>();
 }

@@ -10,7 +10,6 @@ public interface IBackendProjectContext
     DbSet<Cafe> Cafes { get; set; }
     DbSet<Stad> Steden { get; set; }
     DbSet<Studentenclub> Studentenclubs { get; set; }
-    DbSet<Student> Studente { get; set; }
     DbSet<Evenementen> Evenementen { get; set; }
     DbSet<EvenementenStudentenclub> EvenementenStudentenclub {get;set;}
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
@@ -21,7 +20,6 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
     public DbSet<Cafe> Cafes { get; set; }
     public DbSet<Stad> Steden { get; set; }
     public DbSet<Studentenclub> Studentenclubs { get; set; }
-    public DbSet<Student> Studente { get; set; }
     public DbSet<Evenementen> Evenementen { get; set; }
     public DbSet<EvenementenStudentenclub> EvenementenStudentenclub {get;set;}
 

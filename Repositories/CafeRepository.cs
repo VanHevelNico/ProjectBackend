@@ -19,10 +19,13 @@ public class CafeRepository : ICafeRepository {
         _context = context;
     }
     public async Task<List<Cafe>> GetCafes() {
-        return await _context.Cafes.ToListAsync();
+        return await _context.Cafes.Include(s => s.Studentenclubs).ToListAsync();
     }
     public async Task<List<Cafe>> GetCafeByCity(int stadId) {
-        return await _context.Cafes.Where(s => s.StadId == stadId).ToListAsync();
+        return await _context.Cafes.Where(s => s.StadId == stadId).Include(s => s.Studentenclubs).ToListAsync();
+    }
+    public async Task<List<Studentenclub>> GetClubs() {
+        return await _context.Studentenclubs.ToListAsync(); 
     }
     public async Task<Cafe> AddCafe(Cafe cafe)
     {
@@ -31,6 +34,6 @@ public class CafeRepository : ICafeRepository {
         return cafe;
     }
     public async Task<Cafe> GetCafeById(Guid CafeId) {
-        return await _context.Cafes.Where(s => s.CafeId == CafeId).SingleOrDefaultAsync();
+        return await _context.Cafes.Where(s => s.CafeId == CafeId).Include(s => s.Studentenclubs).SingleOrDefaultAsync();
     }
 }

@@ -6,9 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IEvenementRepository {
     Task<List<Evenementen>> GetEvenementen();
-    Task<List<Evenementen>> GetEvenementenByData(DateTime startDate, DateTime endDate);
-    //Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId);
+    Task<List<Evenementen>> GetEvenementenByData(string startDate, string endDate);
     Task<Evenementen> AddEvent(Evenementen value);
+    Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId);
 }
 
 public class EvenementRepository : IEvenementRepository {
@@ -18,14 +18,17 @@ public class EvenementRepository : IEvenementRepository {
         _context = context;
     }
     public async Task<List<Evenementen>> GetEvenementen() {
-        return await _context.Evenementen.Include(s => s.EvenementenStudentenclub).ToListAsync();
+        return await _context.Evenementen.Include(s => s.EvenementenStudentenclub).ThenInclude(es => es.Studentenclub).ToListAsync();
     }
-    public async Task<List<Evenementen>> GetEvenementenByData(DateTime startDate, DateTime endDate) {
-        return await _context.Evenementen.Where(s => s.Date > startDate && s.Date < endDate).ToListAsync();
+    public async Task<List<Evenementen>> GetEvenementenByData(string startDate, string endDate) {
+        DateTime start = Convert.ToDateTime(startDate);
+        DateTime end = Convert.ToDateTime(endDate);
+        return await _context.Evenementen.Where(s => s.Date > start && s.Date < end).Include(s => s.EvenementenStudentenclub).ThenInclude(es => es.Studentenclub).ToListAsync();
+
     }
-    /*public async Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId) {
-        return await _context.Evenementen.Where(p => p.EvenementenStudentenclub.Any(l => l.StudentenclubId == studentenclubId)).ToListAsync();
-    }*/
+    public async Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId) {
+        return await _context.Evenementen.Where(p => p.EvenementenStudentenclub.Any(l => l.StudentenclubId == studentenclubId)).Include(s => s.EvenementenStudentenclub).ThenInclude(es => es.Studentenclub).ToListAsync();
+    }
     public async Task<Evenementen> AddEvent(Evenementen value)
     {
         _context.Evenementen.Add(value);

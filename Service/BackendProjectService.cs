@@ -8,31 +8,34 @@ public interface IBackendProjectService {
     Task<List<Cafe>> GetCafeByCityId(int cityId);
     Task<List<Cafe>> GetCafes();
     Task<List<Evenementen>> GetEvenementen();
-    Task<List<Evenementen>> GetEvenementenByDate(DateTime startDate, DateTime endDate);
+    Task<List<Evenementen>> GetEvenementenByDate(string startDate, string endDate);
     Task<CafeDTO> AddCafe(CafeDTO cafe);
     Task<Evenementen> AddEvent(EvenementenAddDTO waarde);
     Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde);
+    Task<List<Evenementen>> GetEventByStudentClub(Guid StudentenClub);
+    Task<List<Studentenclub>> GetClubs();
 }
 public class BackendProjectService : IBackendProjectService {
     private readonly ICafeRepository _cafeRepository;
     private readonly IEvenementRepository _evenementRepository;
     private readonly IStadRepository _stadRepository;
     private readonly IStudentenclubRepository _studentenclubRepository;
-    private readonly IStudentRepository _studentRepository;
 
     private IMapper _mapper;
 
-    public BackendProjectService(IMapper mapper,ICafeRepository cafeRepository, IEvenementRepository evenementRepository, IStadRepository stadRepository, IStudentenclubRepository studentenclubRepository, IStudentRepository studentRepository) {
+    public BackendProjectService(IMapper mapper,ICafeRepository cafeRepository, IEvenementRepository evenementRepository, IStadRepository stadRepository, IStudentenclubRepository studentenclubRepository) {
         _mapper = mapper;
         _cafeRepository = cafeRepository;
         _evenementRepository = evenementRepository;
         _stadRepository = stadRepository;
         _studentenclubRepository = studentenclubRepository;
-        _studentRepository = studentRepository;
     }
     //cafes
     public async Task<List<Cafe>> GetCafes() {
         return await _cafeRepository.GetCafes();
+    }
+    public async Task<List<Studentenclub>> GetClubs() {
+        return await _studentenclubRepository.GetStudentenclubs();
     }
     public async Task<Cafe> GetCafeById(Guid cafeId)
     {
@@ -45,10 +48,12 @@ public class BackendProjectService : IBackendProjectService {
     public async Task<List<Evenementen>> GetEvenementen() {
         return await _evenementRepository.GetEvenementen();
     }
-    public async Task<List<Evenementen>> GetEvenementenByDate(DateTime startDate, DateTime endDate) {
+    public async Task<List<Evenementen>> GetEvenementenByDate(string startDate, string endDate) {
         return await _evenementRepository.GetEvenementenByData(startDate, endDate);
     }
-
+    public async Task<List<Evenementen>> GetEventByStudentClub(Guid StudentenClub) {
+        return await _evenementRepository.GetEvenementenByOrganisator(StudentenClub);
+    }
     public async Task<CafeDTO> AddCafe(CafeDTO cafe) {
         try {
             Cafe newCafe = _mapper.Map<Cafe>(cafe);
@@ -75,7 +80,7 @@ public class BackendProjectService : IBackendProjectService {
         }
     }
 
-        public async Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde) {
+    public async Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde) {
         try {
             Studentenclub newStudentClub = _mapper.Map<Studentenclub>(waarde);
             await _studentenclubRepository.AddStudentenclub(newStudentClub);

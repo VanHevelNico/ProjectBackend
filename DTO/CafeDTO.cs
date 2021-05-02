@@ -7,6 +7,6 @@ using System.Collections.Generic;
         public string Naam {get;set;}
         public string Adres {get;set;}
         public int StadId {get;set;}
-        //public List<Studentenclub> Studentenclubs {get;} = new List<Studentenclub>();
+        public List<StudentenclubDTO> Studentenclubs {get;set;}
        
     }

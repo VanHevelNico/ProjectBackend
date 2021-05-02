@@ -14,6 +14,7 @@ public interface IBackendProjectService {
     Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde);
     Task<List<Evenementen>> GetEventByStudentClub(Guid StudentenClub);
     Task<List<Studentenclub>> GetClubs();
+    Task UpdateEvenement(EvenementenUpdateDTO evenement);
 }
 public class BackendProjectService : IBackendProjectService {
     private readonly ICafeRepository _cafeRepository;
@@ -89,5 +90,11 @@ public class BackendProjectService : IBackendProjectService {
         catch (System.Exception ex) {
             throw ex;
         }
+    }
+
+    public async Task UpdateEvenement(EvenementenUpdateDTO evenement) 
+    {
+        Evenementen oldEvenement = _mapper.Map<Evenementen>(evenement);
+        await _evenementRepository.UpdateEvenement(oldEvenement);
     }
 }

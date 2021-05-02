@@ -13,5 +13,7 @@ public class AutoMapping : Profile
         CreateMap<Evenementen, EvenementenAddDTO>();
         CreateMap<EvenementenAddDTO, Evenementen>();
         
+        CreateMap<Evenementen, EvenementenUpdateDTO>();
+        CreateMap<EvenementenUpdateDTO, Evenementen>();
     }
 }

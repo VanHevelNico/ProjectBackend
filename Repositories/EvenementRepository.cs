@@ -9,6 +9,7 @@ public interface IEvenementRepository {
     Task<List<Evenementen>> GetEvenementenByData(string startDate, string endDate);
     Task<Evenementen> AddEvent(Evenementen value);
     Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId);
+    Task UpdateEvenement(Evenementen evenement);
 }
 
 public class EvenementRepository : IEvenementRepository {
@@ -41,5 +42,10 @@ public class EvenementRepository : IEvenementRepository {
         {
             throw new Exception("event not saved.");
         }
+    }
+    public async Task UpdateEvenement(Evenementen evenement)
+    {
+        _context.Evenementen.Update(evenement); // Update de game
+        await _context.SaveChangesAsync();
     }
 }

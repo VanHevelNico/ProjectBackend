@@ -137,6 +137,18 @@ namespace Project.Controllers
             }
 
         }
+
+        [HttpPut]
+        [Route("evenementen")]
+        public async Task<ActionResult<EvenementenUpdateDTO>> UpdateEvent(EvenementenUpdateDTO evenement) {
+            try {
+                await _backendProjectService.UpdateEvenement(evenement);
+                return evenement;
+            }
+            catch(Exception) {
+                return new StatusCodeResult(500);
+            }
+        }
         
         [HttpPost]
         [Route("studentenclubs")]

@@ -31,7 +31,7 @@
   },
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "Project/1.0.0": {
+      "project/1.0.0": {
         "dependencies": {
           "AutoMapper": "10.1.1",
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.1",
@@ -323,10 +323,10 @@
           "WindowsBase": "4.0.0.0"
         },
         "runtime": {
-          "Project.dll": {}
+          "project.dll": {}
         },
         "compile": {
-          "Project.dll": {}
+          "project.dll": {}
         }
       },
       "AutoMapper/10.1.1": {
@@ -3016,7 +3016,7 @@
     }
   },
   "libraries": {
-    "Project/1.0.0": {
+    "project/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

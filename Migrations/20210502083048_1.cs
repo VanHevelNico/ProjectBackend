@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Project.Migrations
 {
-    public partial class _123 : Migration
+    public partial class _1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -89,12 +89,6 @@ namespace Project.Migrations
                         principalTable: "Cafes",
                         principalColumn: "CafeId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Studentenclubs_Steden_StadId",
-                        column: x => x.StadId,
-                        principalTable: "Steden",
-                        principalColumn: "StadId",
-                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,11 +96,11 @@ namespace Project.Migrations
                 columns: table => new
                 {
                     EvenementenId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    OrganisatorsStudentenclubId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    StudentenclubId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EvenementenStudentenclub", x => new { x.EvenementenId, x.OrganisatorsStudentenclubId });
+                    table.PrimaryKey("PK_EvenementenStudentenclub", x => new { x.EvenementenId, x.StudentenclubId });
                     table.ForeignKey(
                         name: "FK_EvenementenStudentenclub_Evenementen_EvenementenId",
                         column: x => x.EvenementenId,
@@ -114,8 +108,8 @@ namespace Project.Migrations
                         principalColumn: "EvenementenId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EvenementenStudentenclub_Studentenclubs_OrganisatorsStudentenclubId",
-                        column: x => x.OrganisatorsStudentenclubId,
+                        name: "FK_EvenementenStudentenclub_Studentenclubs_StudentenclubId",
+                        column: x => x.StudentenclubId,
                         principalTable: "Studentenclubs",
                         principalColumn: "StudentenclubId",
                         onDelete: ReferentialAction.Cascade);
@@ -145,25 +139,30 @@ namespace Project.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Steden",
+                columns: new[] { "StadId", "Naam", "Provincie" },
+                values: new object[] { 1, "Kortrijk", "West-Vlaanderen" });
+
+            migrationBuilder.InsertData(
+                table: "Steden",
+                columns: new[] { "StadId", "Naam", "Provincie" },
+                values: new object[] { 2, "Brugge", "West-Vlaanderen" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Cafes_StadId",
                 table: "Cafes",
                 column: "StadId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EvenementenStudentenclub_OrganisatorsStudentenclubId",
+                name: "IX_EvenementenStudentenclub_StudentenclubId",
                 table: "EvenementenStudentenclub",
-                column: "OrganisatorsStudentenclubId");
+                column: "StudentenclubId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Studentenclubs_CafeId",
                 table: "Studentenclubs",
                 column: "CafeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Studentenclubs_StadId",
-                table: "Studentenclubs",
-                column: "StadId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_StudentStudentenclub_LedenStudentId",

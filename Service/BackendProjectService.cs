@@ -10,8 +10,7 @@ public interface IBackendProjectService {
     Task<List<Evenementen>> GetEvenementen();
     Task<List<Evenementen>> GetEvenementenByDate(DateTime startDate, DateTime endDate);
     Task<CafeDTO> AddCafe(CafeDTO cafe);
-    Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId);
-    Task<EvenementenDTO> AddEvent(EvenementenDTO waarde);
+    Task<Evenementen> AddEvent(EvenementenAddDTO waarde);
     Task<StudentenclubDTO> AddStudentenclub(StudentenclubDTO waarde);
 }
 public class BackendProjectService : IBackendProjectService {
@@ -49,9 +48,7 @@ public class BackendProjectService : IBackendProjectService {
     public async Task<List<Evenementen>> GetEvenementenByDate(DateTime startDate, DateTime endDate) {
         return await _evenementRepository.GetEvenementenByData(startDate, endDate);
     }
-    public async Task<List<Evenementen>> GetEvenementenByOrganisator(Guid studentenclubId) {
-        return await _evenementRepository.GetEvenementenByOrganisator(studentenclubId);
-    }
+
     public async Task<CafeDTO> AddCafe(CafeDTO cafe) {
         try {
             Cafe newCafe = _mapper.Map<Cafe>(cafe);
@@ -62,11 +59,16 @@ public class BackendProjectService : IBackendProjectService {
             throw ex;
         }
     }    
-    public async Task<EvenementenDTO> AddEvent(EvenementenDTO waarde) {
+    public async Task<Evenementen> AddEvent(EvenementenAddDTO waarde) {
         try {
             Evenementen newEvent = _mapper.Map<Evenementen>(waarde);
-            await _evenementRepository.AddEvent(newEvent);
-            return waarde;
+            newEvent.EvenementenStudentenclub = new List<EvenementenStudentenclub>();
+            foreach (StudentenclubDTO stu in waarde.Organisators)
+            {
+                newEvent.EvenementenStudentenclub.Add(new EvenementenStudentenclub() { StudentenclubId = stu.StudentenclubId });
+            }
+            
+            return await _evenementRepository.AddEvent(newEvent);
         }
         catch (System.Exception ex) {
             throw ex;

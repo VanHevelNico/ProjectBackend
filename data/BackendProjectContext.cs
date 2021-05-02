@@ -12,6 +12,7 @@ public interface IBackendProjectContext
     DbSet<Studentenclub> Studentenclubs { get; set; }
     DbSet<Student> Studente { get; set; }
     DbSet<Evenementen> Evenementen { get; set; }
+    DbSet<EvenementenStudentenclub> EvenementenStudentenclub {get;set;}
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
 
@@ -22,6 +23,7 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
     public DbSet<Studentenclub> Studentenclubs { get; set; }
     public DbSet<Student> Studente { get; set; }
     public DbSet<Evenementen> Evenementen { get; set; }
+    public DbSet<EvenementenStudentenclub> EvenementenStudentenclub {get;set;}
 
     private ConnectionStrings _connectionStrings;
 
@@ -41,8 +43,8 @@ public class BackendProjectContext : DbContext, IBackendProjectContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
             
-       /* modelBuilder.Entity<EvenementenStudentenclub>().HasKey(cs => new {cs.EvenementId, cs.StudentenclubId});
-        modelBuilder.Entity<StudentStudentenclub>().HasKey(cs => new {cs.LedenStudentId, cs.ClubsStudentenclubId});*/
+        modelBuilder.Entity<EvenementenStudentenclub>()
+            .HasKey(cs => new {cs.EvenementenId, cs.StudentenclubId});
 
         modelBuilder.Entity<Stad>().HasData(new Stad()
         {

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Project.Migrations
 {
     [DbContext(typeof(BackendProjectContext))]
-    [Migration("20210501190052_aaa")]
-    partial class aaa
+    [Migration("20210502083048_1")]
+    partial class _1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -70,12 +70,12 @@ namespace Project.Migrations
                     b.Property<Guid>("EvenementenId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("OrganisatorsStudentenclubId")
+                    b.Property<Guid>("StudentenclubId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("EvenementenId", "OrganisatorsStudentenclubId");
+                    b.HasKey("EvenementenId", "StudentenclubId");
 
-                    b.HasIndex("OrganisatorsStudentenclubId");
+                    b.HasIndex("StudentenclubId");
 
                     b.ToTable("EvenementenStudentenclub");
                 });
@@ -169,8 +169,6 @@ namespace Project.Migrations
 
                     b.HasIndex("CafeId");
 
-                    b.HasIndex("StadId");
-
                     b.ToTable("Studentenclubs");
                 });
 
@@ -188,16 +186,18 @@ namespace Project.Migrations
             modelBuilder.Entity("EvenementenStudentenclub", b =>
                 {
                     b.HasOne("Evenementen", null)
-                        .WithMany()
+                        .WithMany("EvenementenStudentenclub")
                         .HasForeignKey("EvenementenId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Studentenclub", null)
-                        .WithMany()
-                        .HasForeignKey("OrganisatorsStudentenclubId")
+                    b.HasOne("Studentenclub", "Studentenclub")
+                        .WithMany("EvenementenStudentenclub")
+                        .HasForeignKey("StudentenclubId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Studentenclub");
                 });
 
             modelBuilder.Entity("StudentStudentenclub", b =>
@@ -217,21 +217,11 @@ namespace Project.Migrations
 
             modelBuilder.Entity("Studentenclub", b =>
                 {
-                    b.HasOne("Cafe", "Cafe")
+                    b.HasOne("Cafe", null)
                         .WithMany("Studentenclubs")
                         .HasForeignKey("CafeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Stad", "Stad")
-                        .WithMany()
-                        .HasForeignKey("StadId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Cafe");
-
-                    b.Navigation("Stad");
                 });
 
             modelBuilder.Entity("Cafe", b =>
@@ -239,9 +229,19 @@ namespace Project.Migrations
                     b.Navigation("Studentenclubs");
                 });
 
+            modelBuilder.Entity("Evenementen", b =>
+                {
+                    b.Navigation("EvenementenStudentenclub");
+                });
+
             modelBuilder.Entity("Stad", b =>
                 {
                     b.Navigation("Cafes");
+                });
+
+            modelBuilder.Entity("Studentenclub", b =>
+                {
+                    b.Navigation("EvenementenStudentenclub");
                 });
 #pragma warning restore 612, 618
         }

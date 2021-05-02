@@ -98,11 +98,11 @@ namespace Project.Controllers
             }
         }
 
-        [HttpGet]
+       /* [HttpGet]
         [Route("evenementen/studentenclub/{studentenclubId}")]
         public async Task<ActionResult<List<Evenementen>>> GetEventByStudentClub(Guid studentenclubId) {
             try {
-                    return new OkObjectResult(await _backendProjectService.GetEvenementenByOrganisator(studentenclubId));
+                return new OkObjectResult(await _backendProjectService.GetEvenementenByOrganisator(studentenclubId));
             }
             catch(Exception ex) {
                 Console.WriteLine(ex);
@@ -110,11 +110,11 @@ namespace Project.Controllers
                 return new OkObjectResult(ex);
 
             }
-        }
+        }*/
         
         [HttpPost]
         [Route("evenementen")]
-        public async Task<ActionResult<EvenementenDTO>> AddEvent(EvenementenDTO waarde) {
+        public async Task<ActionResult<Evenementen>> AddEvent(EvenementenAddDTO waarde) {
             try{
                 return new OkObjectResult(await _backendProjectService.AddEvent(waarde));
             }
